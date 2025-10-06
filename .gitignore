@@ -1,0 +1,63 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Build / output
+dist/
+build/
+out/
+.next/
+.tmp/
+coverage/
+.nyc_output/
+.cache/
+
+# Environment / secrets
+.env
+.env.*.local
+.env.local
+google-credentials.json
+credentials.json
+*.pem
+*.key
+
+# AWS / cloud cli
+.aws/
+.aws/credentials
+
+# Uploaded files & temp
+uploads/
+tmp/
+temp/
+*.tmp
+
+# Logs
+logs/
+*.log
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs / editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Docker / virtualization
+docker-compose*.yml
+Dockerfile*
+
+# Misc
+*.swp
+*.bak
+*.lock-wscript
+.pnp.*
