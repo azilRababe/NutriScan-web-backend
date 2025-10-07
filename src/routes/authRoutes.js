@@ -1,8 +1,27 @@
 import express from "express";
-import { signup, login } from "../controllers/authController.js";
+import {
+  login,
+  googleAuth,
+  googleCallback,
+  facebookAuth,
+  facebookCallback,
+  register,
+} from "../controllers/authController.js";
+
 const router = express.Router();
 
-router.post("/signup", signup);
+// User registration
+router.post("/register", register);
+
+// Local login
 router.post("/login", login);
+
+// Google OAuth
+router.get("/google", googleAuth);
+router.get("/google/callback", googleCallback);
+
+// Facebook OAuth
+router.get("/facebook", facebookAuth);
+router.get("/facebook/callback", facebookCallback);
 
 export default router;
