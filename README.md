@@ -83,7 +83,7 @@ npm run dev
 
 ✅ **User Authentication**
 
-- Sign up & login with JWT-based sessions
+- Sign up & login with passportjs
 - Passwords hashed with bcrypt
 
 ✅ **Barcode Lookup**
@@ -105,34 +105,6 @@ npm run dev
 
 - Upload images to AWS S3 or Cloudinary using presigned URLs
 
----
-
-## 📡 API Endpoints
-
-| Method   | Endpoint                 | Description                                 |
-| -------- | ------------------------ | ------------------------------------------- |
-| **POST** | `/api/auth/signup`       | Register new user                           |
-| **POST** | `/api/auth/login`        | Login and get JWT token                     |
-| **GET**  | `/api/products/:barcode` | Get product data (from DB or OpenFoodFacts) |
-| **POST** | `/api/scans`             | Upload and process a new scan               |
-| **GET**  | `/api/scans/user/:id`    | Get scans for a specific user               |
-
----
-
-## 🧩 Example `.env.example`
-
-```env
-PORT=5000
-MONGO_URI=
-JWT_SECRET=
-GOOGLE_APPLICATION_CREDENTIALS=./google-credentials.json
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_REGION=
-AWS_BUCKET_NAME=
-```
-
----
 
 ## 📖 API Documentation (Swagger)
 
@@ -149,21 +121,6 @@ FoodScan uses [Swagger UI](https://swagger.io/tools/swagger-ui/) for interactive
   - See required request bodies, parameters, and response formats.
   - Authenticate protected routes by clicking "Authorize" and entering your JWT token.
 
-```
-
----
-
-## 🧪 Testing
-
-You can test endpoints using **Postman** or **Thunder Client**:
-
-1. Register a user (`POST /api/auth/signup`)
-2. Login to get JWT token
-3. Use token in `Authorization: Bearer <token>` header for protected routes
-4. Test `/api/products/:barcode` and `/api/scans`
-
----
-
 ## ☁️ Deployment
 
 You can deploy the backend easily on **Render**, **Railway**, or **Vercel**:
@@ -177,8 +134,8 @@ You can deploy the backend easily on **Render**, **Railway**, or **Vercel**:
 
 ## 🧑‍💻 Developer
 
-**Author:** [Rababe Azil](https://github.com/azilRababe)
-**Role:** Backend Developer
+**Author:** [Rababe Azil](https://github.com/azilRababe) </br>
+**Role:** Backend Developer</br>
 **Stack:** Node.js · MongoDB · Express.js · Google Cloud Vision · OpenFoodFacts API
 
 ---
@@ -187,4 +144,4 @@ You can deploy the backend easily on **Render**, **Railway**, or **Vercel**:
 
 This project is licensed under the **MIT License**.
 Feel free to use and modify it for educational or commercial purposes.
-```
+
