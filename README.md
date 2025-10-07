@@ -134,6 +134,25 @@ AWS_BUCKET_NAME=
 
 ---
 
+## 📖 API Documentation (Swagger)
+
+FoodScan uses [Swagger UI](https://swagger.io/tools/swagger-ui/) for interactive API documentation.
+
+- **View docs locally:**  
+  After starting the server, open [http://localhost:5000/api-docs](http://localhost:5000/api-docs) in your browser.
+
+- **Spec location:**  
+  The OpenAPI spec is located at `src/swagger.json`.
+
+- **How to use:**
+  - Try out endpoints directly from the Swagger UI.
+  - See required request bodies, parameters, and response formats.
+  - Authenticate protected routes by clicking "Authorize" and entering your JWT token.
+
+```
+
+---
+
 ## 🧪 Testing
 
 You can test endpoints using **Postman** or **Thunder Client**:
@@ -168,7 +187,4 @@ You can deploy the backend easily on **Render**, **Railway**, or **Vercel**:
 
 This project is licensed under the **MIT License**.
 Feel free to use and modify it for educational or commercial purposes.
-
----
-
-> “Scan smarter. Eat better. Live well.” — _FoodScan Team_
+```

@@ -1,4 +1,5 @@
 import Product from "../models/Product.js";
+import Scan from "../models/Scan.js";
 import { fetchProductData } from "../utils/openFoodFacts.js";
 
 export const getProduct = async (req, res) => {
@@ -17,5 +18,13 @@ export const getProduct = async (req, res) => {
     });
   }
 
+  if (req.user && product) {
+    await Scan.create({
+      user: req.user._id,
+      product: product._id,
+      scanType: "barcode",
+      scannedAt: new Date(),
+    });
+  }
   res.json(product);
 };

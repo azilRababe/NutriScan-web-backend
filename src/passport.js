@@ -2,10 +2,32 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as FacebookStrategy } from "passport-facebook";
+import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
+
 import User from "./models/User.js";
 import dotenv from "dotenv";
 
 dotenv.config();
+
+const opts = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SECRET,
+};
+
+passport.use(
+  "jwt",
+  new JwtStrategy(opts, async (jwt_payload, done) => {
+    try {
+      console.log("JWT payload:", jwt_payload);
+      const user = await User.findById(jwt_payload.id);
+
+      if (user) return done(null, user);
+      return done(null, false);
+    } catch (err) {
+      return done(err, false);
+    }
+  })
+);
 
 // Local Strategy (email + password)
 passport.use(

@@ -7,6 +7,11 @@ const userSchema = new mongoose.Schema({
   password: String, // optional for OAuth users
   googleId: String,
   facebookId: String,
+
+  // fields for analytics
+  totalScans: { type: Number, default: 0 },
+  favoriteCategories: [String],
+  createdAt: { type: Date, default: Date.now },
 });
 
 // Hash password before saving

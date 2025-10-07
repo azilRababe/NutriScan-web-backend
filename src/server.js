@@ -7,6 +7,12 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import scanRoutes from "./routes/scanRoutes.js";
+import swaggerUi from "swagger-ui-express";
+import fs from "fs";
+
+const swaggerDocument = JSON.parse(
+  fs.readFileSync("./src/swagger.json", "utf-8")
+);
 
 dotenv.config();
 
@@ -17,8 +23,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Session (needed for Passport)
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "secret",
