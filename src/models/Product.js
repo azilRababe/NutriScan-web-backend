@@ -1,12 +1,15 @@
 import mongoose from "mongoose";
 
-const productSchema = new mongoose.Schema({
-  barcode: { type: String, unique: true },
-  name: String,
-  brand: String,
-  nutriments: Object,
-  image_url: String,
-  lastUpdated: { type: Date, default: Date.now },
-});
+const { Schema, model, Types } = mongoose;
 
-export default mongoose.model("Product", productSchema);
+const productSchema = new Schema(
+  {
+    barcode: { type: String, required: true, unique: true },
+    score: { type: Number, required: true },
+    // rating: { type: Schema.Types.Mixed, required: true },
+    data: { type: Schema.Types.Mixed, required: true }, // Store the full API object here
+  },
+  { timestamps: true }
+);
+
+export default model("Product", productSchema);

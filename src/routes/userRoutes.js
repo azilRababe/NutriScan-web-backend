@@ -1,8 +1,9 @@
 import express from "express";
-import { createScan } from "../controllers/scanController.js";
+import { getProfile } from "../controllers/userController.js";
 import { authenticateJwt } from "../middlewares/authMiddleware.js";
+
 const router = express.Router();
 
-router.post("/", authenticateJwt, createScan);
+router.post("/me", authenticateJwt, getProfile);
 
 export default router;

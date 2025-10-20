@@ -1,6 +1,6 @@
 import Scan from "../models/Scan.js";
 import Product from "../models/Product.js";
-import { extractText } from "../utils/ocr.js";
+// import { extractText } from "../utils/ocr.js";
 import { fetchProductData } from "../utils/openFoodFacts.js";
 
 export const createScan = async (req, res) => {

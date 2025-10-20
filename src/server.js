@@ -7,6 +7,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import scanRoutes from "./routes/scanRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import swaggerUi from "swagger-ui-express";
 import fs from "fs";
 
@@ -39,6 +40,11 @@ app.use(passport.session());
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/scans", scanRoutes);
+app.use("/api/user", userRoutes);
+
+// app.get("/ping", (req, res) => {
+//   res.json({ message: "pong" });
+// });
 
 app.listen(process.env.PORT, () =>
   console.log(`🚀 Server running on port ${process.env.PORT}`)

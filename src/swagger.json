@@ -3,17 +3,19 @@
   "info": {
     "title": "FoodScan API",
     "version": "1.0.0",
-    "description": "API documentation for FoodScan backend"
+    "description": "API documentation for the FoodScan backend"
   },
   "servers": [
     {
-      "url": "http://localhost:5000"
+      "url": "http://localhost:5000",
+      "description": "Local development server"
     }
   ],
   "paths": {
     "/api/auth/register": {
       "post": {
         "summary": "Register a new user",
+        "description": "Creates a new user account with a username, email, and password.",
         "requestBody": {
           "required": true,
           "content": {
@@ -22,10 +24,15 @@
                 "type": "object",
                 "properties": {
                   "username": { "type": "string" },
-                  "email": { "type": "string" },
-                  "password": { "type": "string" }
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string", "format": "password" }
                 },
                 "required": ["username", "email", "password"]
+              },
+              "example": {
+                "username": "Rababe",
+                "email": "rababe@example.com",
+                "password": "StrongPassword123"
               }
             }
           }
@@ -36,9 +43,11 @@
         }
       }
     },
+
     "/api/auth/login": {
       "post": {
         "summary": "Login with email and password",
+        "description": "Authenticates a user and returns a JWT token.",
         "requestBody": {
           "required": true,
           "content": {
@@ -46,39 +55,133 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "email": { "type": "string" },
-                  "password": { "type": "string" }
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string", "format": "password" }
                 },
                 "required": ["email", "password"]
+              },
+              "example": {
+                "email": "rababe@example.com",
+                "password": "StrongPassword123"
               }
             }
           }
         },
         "responses": {
-          "200": { "description": "Login successful, returns JWT" },
+          "200": { "description": "Login successful, returns JWT token" },
+          "400": { "description": "Invalid credentials" }
+        }
+      }
+    },
+
+    "/api/auth/google": {
+      "get": {
+        "summary": "Login with Google (Passport.js)",
+        "description": "Redirects the user to Google for authentication.",
+        "responses": {
+          "302": { "description": "Redirect to Google login" }
+        }
+      }
+    },
+
+    "/api/auth/google/callback": {
+      "get": {
+        "summary": "Google login callback",
+        "description": "Handles the response from Google and returns a JWT token on success.",
+        "responses": {
+          "200": { "description": "Login successful, returns JWT token" },
           "400": { "description": "Login failed" }
         }
       }
     },
+
+    "/api/auth/facebook": {
+      "get": {
+        "summary": "Login with Facebook (Passport.js)",
+        "description": "Redirects the user to Facebook for authentication.",
+        "responses": {
+          "302": { "description": "Redirect to Facebook login" }
+        }
+      }
+    },
+
+    "/api/auth/facebook/callback": {
+      "get": {
+        "summary": "Facebook login callback",
+        "description": "Handles the response from Facebook and returns a JWT token on success.",
+        "responses": {
+          "200": { "description": "Login successful, returns JWT token" },
+          "400": { "description": "Login failed" }
+        }
+      }
+    },
+
+    "/api/user/me": {
+      "get": {
+        "summary": "Get authenticated user profile",
+        "description": "Returns the profile of the currently logged-in user. Requires a valid JWT token.",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "User profile retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "_id": { "type": "string" },
+                        "name": { "type": "string" },
+                        "email": { "type": "string" },
+                        "role": { "type": "string" }
+                      },
+                      "required": ["_id", "name", "email"]
+                    }
+                  }
+                },
+                "example": {
+                  "user": {
+                    "_id": "64fa2e3a0a5f8b0012345678",
+                    "name": "Rababe",
+                    "email": "rababe@example.com",
+                    "role": "user"
+                  }
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized – missing or invalid token" },
+          "404": { "description": "User not found" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+
     "/api/products/{barcode}": {
       "get": {
         "summary": "Get product by barcode",
+        "description": "Fetches product details by barcode from the database.",
         "parameters": [
           {
             "name": "barcode",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": { "type": "string" },
+            "description": "The product barcode to search for."
           }
         ],
         "security": [{ "bearerAuth": [] }],
         "responses": {
           "200": { "description": "Product found" },
-          "404": { "description": "Product not found" }
+          "404": { "description": "Product not found" },
+          "500": { "description": "Internal server error" }
         }
       }
     }
   },
+
   "components": {
     "securitySchemes": {
       "bearerAuth": {

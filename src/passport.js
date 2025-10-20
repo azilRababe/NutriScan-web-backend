@@ -18,7 +18,7 @@ passport.use(
   "jwt",
   new JwtStrategy(opts, async (jwt_payload, done) => {
     try {
-      console.log("JWT payload:", jwt_payload);
+      // console.log("JWT payload:", jwt_payload);
       const user = await User.findById(jwt_payload.id);
 
       if (user) return done(null, user);
