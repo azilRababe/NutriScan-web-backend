@@ -4,6 +4,6 @@ import { authenticateJwt } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/me", authenticateJwt, getProfile);
+router.get("/me", authenticateJwt, getProfile);
 
 export default router;
