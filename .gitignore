@@ -54,7 +54,6 @@ desktop.ini
 
 # Docker / virtualization
 docker-compose*.yml
-Dockerfile*
 
 # Misc
 *.swp
