@@ -6,6 +6,7 @@ import {
   facebookAuth,
   facebookCallback,
   register,
+  logout,
 } from "../controllers/authController.js";
 
 const router = express.Router();
@@ -15,6 +16,9 @@ router.post("/register", register);
 
 // Local login
 router.post("/login", login);
+
+// logout
+router.post("/logout", logout);
 
 // Google OAuth
 router.get("/google", googleAuth);

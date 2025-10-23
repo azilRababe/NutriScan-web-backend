@@ -25,9 +25,24 @@ export const fetchProductData = async (barcode) => {
       },
     ];
 
-    const results = await Promise.allSettled(
-      sources.map((s) => axios.get(s.url))
-    );
+    for (const s of sources) {
+      try {
+        const res = await axios.get(s.url, { timeout: 8000 });
+        if (res.data?.product) {
+          return {
+            ...res.data.product,
+            Score:
+              s.name === "beauty"
+                ? calculateBeautyScore(res.data.product)
+                : calculateFoodScore(res.data.product),
+            _sourceName: s.name,
+          };
+        }
+      } catch (err) {
+        console.warn(`${s.name} failed:`, err.message);
+      }
+    }
+    throw new Error("No product found");
 
     // find first fulfilled with a product
     const foundIndex = results.findIndex(

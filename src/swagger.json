@@ -7,12 +7,16 @@
   },
   "servers": [
     {
-      "url": "http://localhost:5000",
+      "url": "http://localhost:5000/api",
       "description": "Local development server"
+    },
+    {
+      "url": "https://foodscan-backend.onrender.com/api",
+      "description": "Production server"
     }
   ],
   "paths": {
-    "/api/auth/register": {
+    "/auth/register": {
       "post": {
         "summary": "Register a new user",
         "description": "Creates a new user account with a username, email, and password.",
@@ -44,7 +48,7 @@
       }
     },
 
-    "/api/auth/login": {
+    "/auth/login": {
       "post": {
         "summary": "Login with email and password",
         "description": "Authenticates a user and returns a JWT token.",
@@ -61,8 +65,8 @@
                 "required": ["email", "password"]
               },
               "example": {
-                "email": "rababe@example.com",
-                "password": "StrongPassword123"
+                "email": "admin@gmail.com",
+                "password": "admin123"
               }
             }
           }
@@ -74,7 +78,7 @@
       }
     },
 
-    "/api/auth/google": {
+    "/auth/google": {
       "get": {
         "summary": "Login with Google (Passport.js)",
         "description": "Redirects the user to Google for authentication.",
@@ -84,7 +88,7 @@
       }
     },
 
-    "/api/auth/google/callback": {
+    "/auth/google/callback": {
       "get": {
         "summary": "Google login callback",
         "description": "Handles the response from Google and returns a JWT token on success.",
@@ -95,7 +99,7 @@
       }
     },
 
-    "/api/auth/facebook": {
+    "/auth/facebook": {
       "get": {
         "summary": "Login with Facebook (Passport.js)",
         "description": "Redirects the user to Facebook for authentication.",
@@ -105,7 +109,7 @@
       }
     },
 
-    "/api/auth/facebook/callback": {
+    "/auth/facebook/callback": {
       "get": {
         "summary": "Facebook login callback",
         "description": "Handles the response from Facebook and returns a JWT token on success.",
@@ -116,7 +120,7 @@
       }
     },
 
-    "/api/user/me": {
+    "/user/me": {
       "get": {
         "summary": "Get authenticated user profile",
         "description": "Returns the profile of the currently logged-in user. Requires a valid JWT token.",
@@ -159,7 +163,7 @@
       }
     },
 
-    "/api/products/{barcode}": {
+    "/products/{barcode}": {
       "get": {
         "summary": "Get product by barcode",
         "description": "Fetches product details by barcode from the database.",

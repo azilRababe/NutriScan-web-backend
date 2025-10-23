@@ -48,6 +48,11 @@ export const login = (req, res, next) => {
   })(req, res, next);
 };
 
+// logout
+export const logout = (req, res, next) => {
+  res.status(200).json({ message: "Logged out successfully" });
+};
+
 // Google OAuth redirect
 export const googleAuth = passport.authenticate("google", {
   scope: ["profile", "email"],
