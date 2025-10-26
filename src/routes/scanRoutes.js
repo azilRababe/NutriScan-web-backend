@@ -1,8 +1,8 @@
 import express from "express";
-import { createScan } from "../controllers/scanController.js";
+import { toggleFavorite } from "../controllers/scanController.js";
 import { authenticateJwt } from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
-router.post("/", authenticateJwt, createScan);
+router.patch("/:id/favorite", authenticateJwt, toggleFavorite);
 
 export default router;

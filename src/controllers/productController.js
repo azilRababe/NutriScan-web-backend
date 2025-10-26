@@ -5,6 +5,8 @@ import { fetchProductData } from "../utils/openFoodFacts.js";
 export const getProduct = async (req, res) => {
   try {
     const { barcode } = req.params;
+    const userId = req.user?._id;
+
     let product = await Product.findOne({ barcode });
 
     if (!product) {
@@ -16,21 +18,20 @@ export const getProduct = async (req, res) => {
         data,
         score: data.Score,
       });
-
-      if (req.user && product) {
-        await Scan.create({
-          user: req.user._id,
-          product: product._id,
-          scanType: "barcode",
-          scannedAt: new Date(),
-        });
-      }
-
-      return res.json(product.data);
     }
 
-    // respond when product already exists
-    return res.json(product.data);
+    // Record scan if user is logged in
+    if (userId) {
+      await Scan.create({
+        user: userId,
+        product: product._id,
+        scanType: "barcode",
+        scannedAt: new Date(),
+      });
+    }
+
+    // If no user (unauthenticated), return only the product data
+    return res.json({ product: product.data });
   } catch (error) {
     console.error("❌ Error in getProduct:", error.message);
     return res.status(500).json({ message: "Server error" });

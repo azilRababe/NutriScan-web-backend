@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
-const userSchema = new mongoose.Schema({
-  username: String,
-  email: { type: String, unique: true, sparse: true },
-  password: String, // optional for OAuth users
-  googleId: String,
-  facebookId: String,
-
-  // fields for analytics
-  totalScans: { type: Number, default: 0 },
-  favoriteCategories: [String],
-  createdAt: { type: Date, default: Date.now },
-});
+const userSchema = new mongoose.Schema(
+  {
+    username: String,
+    email: { type: String, unique: true, sparse: true },
+    password: String, // optional for OAuth users
+    googleId: String,
+    facebookId: String,
+    totalScans: { type: Number, default: 0 },
+    favoriteScans: [{ type: mongoose.Schema.Types.ObjectId, ref: "Scan" }],
+  },
+  { timestamps: true }
+);
 
 // Hash password before saving
 userSchema.pre("save", async function (next) {

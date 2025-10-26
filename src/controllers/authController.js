@@ -69,7 +69,8 @@ export const googleCallback = (req, res, next) => {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "7d",
       });
-      res.redirect(`/success?token=${token}`);
+      const frontendURL = process.env.FRONTEND_URL || "http://localhost:5173";
+      res.redirect(`${frontendURL}/dashboard?token=${token}`);
     }
   )(req, res, next);
 };
@@ -90,7 +91,8 @@ export const facebookCallback = (req, res, next) => {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "7d",
       });
-      res.redirect(`/success?token=${token}`);
+      const frontendURL = process.env.FRONTEND_URL || "http://localhost:5173";
+      res.redirect(`${frontendURL}/dashboard?token=${token}`);
     }
   )(req, res, next);
 };

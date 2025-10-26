@@ -3,52 +3,30 @@ import Product from "../models/Product.js";
 // import { extractText } from "../utils/ocr.js";
 import { fetchProductData } from "../utils/openFoodFacts.js";
 
-export const createScan = async (req, res) => {
+export const toggleFavorite = async (req, res) => {
   try {
-    const { imageUrl, barcode, scanType = "barcode" } = req.body;
-    const userId = req.user._id; // Get from Passport.js (JWT auth)
+    const { id } = req.params; // scan ID
+    const userId = req.user._id;
 
-    let product;
-
-    if (scanType === "barcode" && barcode) {
-      product = await Product.findOne({ barcode });
-
-      if (!product) {
-        const data = await fetchProductData(barcode);
-
-        if (!data || !data.product_name) {
-          return res
-            .status(404)
-            .json({ message: "Product not found in database or API." });
-        }
-
-        product = await Product.create({
-          barcode,
-          name: data.product_name,
-          brand: data.brands,
-          nutriments: data.nutriments,
-          image_url: data.image_url,
-          category: data.categories?.split(",")[0] || "Unknown",
-          lastFetched: new Date(),
-        });
-      }
+    // Find the scan and make sure it belongs to this user
+    const scan = await Scan.findOne({ _id: id, user: userId });
+    if (!scan) {
+      return res
+        .status(404)
+        .json({ message: "Scan not found or unauthorized" });
     }
 
-    // Create Scan record
-    const scan = await Scan.create({
-      user: userId,
-      product: product._id,
-      scanType,
-    });
+    // Toggle favorite
+    scan.favorite = !scan.favorite;
+    await scan.save();
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
-      message: "Scan created successfully",
-      scan,
-      product,
+      message: `Scan ${scan.favorite ? "added to" : "removed from"} favorites`,
+      favorite: scan.favorite,
     });
-  } catch (err) {
-    console.error("Error creating scan:", err);
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    console.error("Error toggling favorite:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
