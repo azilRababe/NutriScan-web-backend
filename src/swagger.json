@@ -265,6 +265,37 @@
           "500": { "description": "Internal server error" }
         }
       }
+    },
+    "/products/ocr": {
+      "post": {
+        "tags": ["Products"],
+        "summary": "Scan image for barcode using OCR",
+        "description": "Uploads an image and uses OCR to extract the barcode, then fetches product details.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Image file containing the barcode"
+                  }
+                },
+                "required": ["image"]
+              }
+            }
+          }
+        },
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Product found via OCR" },
+          "400": { "description": "Invalid image or barcode not found" },
+          "500": { "description": "Internal server error" }
+        }
+      }
     }
   },
   "components": {
