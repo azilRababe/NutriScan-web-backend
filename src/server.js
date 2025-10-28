@@ -18,7 +18,7 @@ import swaggerUi from "swagger-ui-express";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-
+import authcontroller_mobile from "./controllers/authController.mobile.js";
 // File paths
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -56,6 +56,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/scans", scanRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/auth/mobile", authcontroller_mobile); // Mobile auth routes
 
 // Server
 const PORT = process.env.PORT || 5000;

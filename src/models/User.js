@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema(
   {
+    avatar: String,
     username: String,
     email: { type: String, unique: true, sparse: true },
     password: String, // optional for OAuth users
